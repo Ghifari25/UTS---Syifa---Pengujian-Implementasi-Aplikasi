@@ -1,20 +1,14 @@
 <?php
 
-namespace App\Models\Simulasi;
+namespace App\Models;
 
-class Pesanan
+use Illuminate\Database\Eloquent\Model;
+
+class Pesanan extends Model
 {
-    public $menu;
-    public $jumlah;
-
-    public function __construct(Menu $menu, int $jumlah)
-    {
-        $this->menu   = $menu;
-        $this->jumlah = $jumlah;
-    }
-
-    public function hitungTotal(): int
-    {
-        return $this->menu->harga * $this->jumlah;
-    }
+    protected $fillable = [
+        'nama_pelanggan',
+        'menu',
+        'jumlah'
+    ];
 }

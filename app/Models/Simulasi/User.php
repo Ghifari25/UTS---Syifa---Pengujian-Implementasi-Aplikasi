@@ -1,21 +1,38 @@
 <?php
 
-namespace App\Models\Simulasi;
+namespace App\Models;
 
-class User
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+// Pastikan ini:
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
 {
-    public $email;
-    public $password;
+    use HasFactory, Notifiable;
 
-    public function __construct(string $email, string $password)
-    {
-        $this->email    = $email;
-        $this->password = $password;
-    }
+    /**
+     * Kolom-kolom yang diizinkan untuk mass assignment.
+     */
+    protected $fillable = [
+        'name',     // ← wajib ada
+        'email',
+        'password',
+    ];
 
-    public function login(): bool
-    {
-        return $this->email === "user@example.com"
-            && $this->password === "1234";
-    }
+    /**
+     * Kolom-kolom yang disembunyikan saat serialisasi.
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Casting kolom ke tipe data tertentu.
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }
